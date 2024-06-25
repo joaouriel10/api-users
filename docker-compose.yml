@@ -6,6 +6,7 @@ services:
     build: .
     ports:
       - "3010:3010"
+    entrypoint: ["sh", "-c", "dockerize -wait tcp://postgres-user:5432 -timeout 20s pnpm install && pnpm prisma generate && pnpm prisma db push && pnpm build && pnpm run start"]
     environment:
       NODE_ENV: development
       DATABASE_URL: "postgresql://${DB_USER_POSTGRESS}:${DB_PASS_POSTGRESS}@postgres-user:5432/${DB_DATABASE_POSTGRESS}"
